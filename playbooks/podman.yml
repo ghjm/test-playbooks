@@ -17,3 +17,15 @@
         detach: yes
         ports:
           - "1234:1234"
+    - add_host:
+        name: netcat
+        connection: podman
+      changed_when: false
+- name: podman
+  hosts: netcat
+  tasks:
+    - command: "nc --recv-only localhost 1234"
+      register: cmdout
+      changed_when: false
+    - debug:
+        msg: "{{ cmdout.stdout_lines }}"
