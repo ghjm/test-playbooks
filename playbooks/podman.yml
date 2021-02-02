@@ -1,0 +1,19 @@
+---
+- name: podman
+  hosts: localhost
+  collections:
+    - containers.podman
+  gather_facts: false
+  tasks:
+    - name: build the container
+      podman_image:
+        name: netcat
+        path: ../netcat_container
+    - name: launch the container
+      podman_container:
+        name: netcat
+        image: netcat
+        state: started
+        detach: yes
+        ports:
+          - "1234:1234"
