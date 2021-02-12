@@ -30,7 +30,7 @@
             name: netcat
             path: "{{ tempdir.path }}"
       
-      when: len(netcat_image.images) == 0
+      when: netcat_image.images|length == 0
 
     - name: launch the container
       podman_container:
