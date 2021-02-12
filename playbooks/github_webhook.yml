@@ -16,7 +16,9 @@
         tower_webhook_payload.pull_request.base.ref == "master"
 
     - name: Run deployment on pushes to master
-      include_tasks: github_deploy.yml
+      block:
+        - include_tasks: github_check.yml
+        - include_tasks: github_deploy.yml
       when: >
         tower_webhook_event_type is defined and
         tower_webhook_event_type == "push" and
