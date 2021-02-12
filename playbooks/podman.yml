@@ -8,10 +8,19 @@
 
     - name: check if the image is already built
       podman_image_info:
-      register: podman_images
+        name: netcat
+      register: netcat_image
+
+    - name: check if the image is already built
+      podman_image_info:
+        name: netcatxyz
+      register: netcatxyz_image
 
     - debug:
-        msg: "{{ podman_images }}"
+        msg: "{{ netcat_image }}"
+
+    - debug:
+        msg: "{{ netcatxyz_image }}"
 
     - name: create container build directory
       tempfile:
