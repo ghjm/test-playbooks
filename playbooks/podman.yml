@@ -11,33 +11,25 @@
         name: netcat
       register: netcat_image
 
-    - name: check if the image is already built
-      podman_image_info:
-        name: netcatxyz
-      register: netcatxyz_image
+    - block:
+      when: "len(netcat_image.images) == 0"
 
-    - debug:
-        msg: "{{ netcat_image }}"
-
-    - debug:
-        msg: "{{ netcatxyz_image }}"
-
-    - name: create container build directory
-      tempfile:
-        state: directory
-        suffix: build
-      register: tempdir
-
-    - name: copy Dockerfile to remote host
-      copy:
-        src: "{{ playbook_dir }}/../netcat_container/Dockerfile"
-        dest: "{{ tempdir.path }}/Dockerfile"
-        mode: 0644
-
-    - name: build the container
-      podman_image:
-        name: netcat
-        path: "{{ tempdir.path }}"
+      - name: create container build directory
+        tempfile:
+          state: directory
+          suffix: build
+        register: tempdir
+  
+      - name: copy Dockerfile to remote host
+        copy:
+          src: "{{ playbook_dir }}/../netcat_container/Dockerfile"
+          dest: "{{ tempdir.path }}/Dockerfile"
+          mode: 0644
+  
+      - name: build the container
+        podman_image:
+          name: netcat
+          path: "{{ tempdir.path }}"
 
     - name: launch the container
       podman_container:
