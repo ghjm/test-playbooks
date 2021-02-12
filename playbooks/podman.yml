@@ -12,7 +12,6 @@
       register: netcat_image
 
     - block:
-      when: len(netcat_image.images) == 0
 
         - name: create container build directory
           tempfile:
@@ -30,6 +29,8 @@
           podman_image:
             name: netcat
             path: "{{ tempdir.path }}"
+      
+      when: len(netcat_image.images) == 0
 
     - name: launch the container
       podman_container:
