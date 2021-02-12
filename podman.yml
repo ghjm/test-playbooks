@@ -21,7 +21,7 @@
   
         - name: copy Dockerfile to remote host
           copy:
-            src: "{{ playbook_dir }}/../netcat_container/Dockerfile"
+            src: "{{ playbook_dir }}/netcat_container/Dockerfile"
             dest: "{{ tempdir.path }}/Dockerfile"
             mode: 0644
   
