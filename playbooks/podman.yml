@@ -6,6 +6,13 @@
   gather_facts: false
   tasks:
 
+    - name: check if the image is already built
+      podman_image_info:
+      register: podman_images
+
+    - debug:
+        msg: "{{ podman_images }}"
+
     - name: create container build directory
       tempfile:
         state: directory
@@ -32,16 +39,15 @@
         ports:
           - "1234:1234"
 
-    - add_host:
-        name: netcat
-        connection: podman
-      changed_when: false
-
-- name: podman
-  hosts: netcat
-  tasks:
-    - command: "nc --recv-only localhost 1234"
+    - name: talk to the container
+      command: "nc --recv-only localhost 1234"
       register: cmdout
       changed_when: false
+
     - debug:
         msg: "{{ cmdout.stdout_lines }}"
+
+    - name: shut down the container
+      podman_container:
+        name: netcat
+        state: absent
