@@ -8,7 +8,7 @@
     - name: build the container
       podman_image:
         name: netcat
-        path: netcat_container
+        path: "{{ playbook_dir }}/../netcat_container"
     - name: launch the container
       podman_container:
         name: netcat
