@@ -1,9 +1,9 @@
 ---
 - name: Call webhook role
-  include_role:
-    name: github_webhook
-  vars:
-    check_tasks:
-      - "github_check.yml"
-    deploy_tasks:
-      - "github_deploy.yml"
+  roles:
+    - role: github_webhook
+      vars:
+        check_tasks:
+          - "github_check.yml"
+        deploy_tasks:
+          - "github_deploy.yml"
