@@ -11,7 +11,7 @@
     tower_webhook_payload.pull_request is defined and
     tower_webhook_payload.pull_request.base is defined and
     tower_webhook_payload.pull_request.base.ref is defined and
-    tower_webhook_payload.pull_request.base.ref == "{{ deploy_branch }}"
+    tower_webhook_payload.pull_request.base.ref == deploy_branch
 
 - name: Run deployment on pushes to master
   include_tasks: "{{ item }}"
@@ -21,4 +21,4 @@
     tower_webhook_event_type == "push" and
     tower_webhook_payload is defined and
     tower_webhook_payload.ref is defined and
-    tower_webhook_payload.ref == "refs/heads/{{ deploy_branch }}"
+    tower_webhook_payload.ref == "refs/heads/" + deploy_branch
