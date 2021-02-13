@@ -1,7 +1,8 @@
 ---
 - name: Run checks on new pull requests to master
-  include_tasks: "{{ item }}"
-  loop: "{{ check_tasks }}"
+  block:
+    - include_tasks: "{{ item }}"
+      loop: "{{ check_tasks }}"
   any_errors_fatal: true
   when: >
     tower_webhook_event_type is defined and
@@ -15,8 +16,9 @@
     tower_webhook_payload.pull_request.base.ref == deploy_branch
 
 - name: Run deployment on pushes to master
-  include_tasks: "{{ item }}"
-  loop: "{{ deploy_tasks }}"
+  block:
+    - include_tasks: "{{ item }}"
+      loop: "{{ deploy_tasks }}"
   any_errors_fatal: true
   when: >
     tower_webhook_event_type is defined and
