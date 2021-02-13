@@ -8,4 +8,5 @@
         check_tasks:
           - "github_check.yml"
         deploy_tasks:
+          - "github_check.yml"
           - "github_deploy.yml"

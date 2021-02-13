@@ -16,7 +16,7 @@
 
 - name: Run deployment on pushes to master
   include_tasks: "{{ item }}"
-  loop: "{{ check_tasks + deploy_tasks }}"
+  loop: "{{ deploy_tasks }}"
   any_errors_fatal: true
   when: >
     tower_webhook_event_type is defined and
