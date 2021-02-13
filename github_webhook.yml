@@ -1,5 +1,7 @@
 ---
 - name: Call webhook role
+  host: localhost
+  gather_facts: false
   roles:
     - role: github_webhook
       vars:
