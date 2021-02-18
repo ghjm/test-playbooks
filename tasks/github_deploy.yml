@@ -1,4 +1,0 @@
----
-- name: run checks
-  debug:
-    msg: "Running deployment"
